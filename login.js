@@ -1,6 +1,7 @@
 'use strict';
 const B=BX,admin=B.getParams().get('role')==='admin';
-if(admin){document.title='Admin Login — BizNexa';B.$('#role-label').textContent='MASTER ADMIN LOGIN';B.$('#login-heading').textContent='Administrator access';B.$('#id').placeholder='admin';}
+if(admin){document.title='Admin Login — BizNexa';B.$('#role-label').textContent='MASTER ADMIN LOGIN';B.$('#login-heading').textContent='Administrator access';B.$('#id').placeholder='admin';B.$('#forgot-link')?.remove();}
+if(!admin&&B.getParams().get('id'))B.$('#id').value=B.getParams().get('id');
 B.$('#login-form').addEventListener('submit',async e=>{e.preventDefault();const btn=B.$('#login-btn');B.busy(btn,true,'Checking credentials…');try{
 const data=await B.post('login',{id:B.$('#id').value,password:B.$('#password').value});
 if(admin&&data.role!=='admin')throw Error('Use admin credentials');if(!admin&&data.role!=='client')throw Error('Use your client ID');
